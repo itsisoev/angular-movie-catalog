@@ -1,59 +1,99 @@
-# AngularMovieCatalog
+# Ответы на вопросы по тестовому заданию
+---
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.0.
+## 1. Распространение событий в JavaScript (Event Propagation)
 
-## Development server
+**Event Propagation** — это процесс, по которому события в DOM проходят через разные уровни элементов. Основные фазы:
 
-To start a local development server, run:
+1. **Capture phase (фаза захвата)** – событие движется от корня документа к целевому элементу
+2. **Target phase (фаза цели)** – событие достигает целевого элемента
+3. **Bubble phase (фаза всплытия)** – событие распространяется от целевого элемента вверх к корню
 
-```bash
-ng serve
+**Применение на практике:**
+- Можно обрабатывать события на родительском элементе вместо множества дочерних (`event delegation`)
+- Возможность остановить распространение события с помощью `event.stopPropagation()` или `event.stopImmediatePropagation()`.
+
+**Пример:**
+```javascript
+document.querySelector('#parent').addEventListener('click', (event) => {
+  console.log('Parent clicked!');
+});
+
+document.querySelector('#child').addEventListener('click', (event) => {
+  console.log('Child clicked!');
+  event.stopPropagation(); // останавливает всплытие
+});
+```
+## 2. Promise в JavaScript
+Promise — объект, представляющий результат асинхронной операции, который может быть выполнен или отклонён
+
+Состояния:
+pending – ожидание результата
+fulfilled – успешно выполнено
+rejected – отклонено
+
+Обработка асинхронного кода:
+С помощью .then() и .catch()
+Или через async/await
+Event Loop обеспечивает асинхронное выполнение кода: задачи из call stack и task queue выполняются по очереди, что позволяет не блокировать основной поток
+
+**Пример:**
+```javascript
+fetch('/api/data')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(err => console.error(err));
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 3. ООП (Объектно-ориентированное программирование) в JavaScript
+Ключевые принципы ООП:
+Инкапсуляция – скрытие внутренней логики и данных объекта
+Наследование – создание новых классов на основе существующих
+Полиморфизм – объекты могут реализовывать один и тот же интерфейс по-разному
+Абстракция – выделение только важной информации и интерфейса
 
-## Code scaffolding
+**Пример:**
+```javascript
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+  speak() {
+    console.log(`${this.name} издает звук`);
+  }
+}
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+class Dog extends Animal {
+  speak() {
+    console.log(`${this.name} лает`);
+  }
+}
 
-```bash
-ng generate component component-name
+const dog = new Dog('Шарик');
+dog.speak(); // Шарик лает
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 4. Обработка URL браузером
 
-```bash
-ng generate --help
-```
+### Основные шаги:
+1. Пользователь вводит URL в адресную строку
+2. Браузер проверяет кэш и DNS (переводит домен в IP)
+3. Устанавливается TCP-соединение и HTTPS (если нужно)
+4. Отправляется HTTP-запрос на сервер
+5. Сервер возвращает HTML, CSS, JS, изображения и т.д
+6. Браузер парсит HTML → строит DOM
+7. CSS парсится → строится CSSOM
+8. JS исполняется → возможна модификация DOM
+9. Формируется **Render Tree**, layout и painting → отображение страницы
 
-## Building
+### Ускорение загрузки:
+- Использование CDN
+- Сжатие ресурсов (gzip, brotli)
+- Кэширование и Service Workers
+- Минификация и бандлинг JS/CSS
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Потенциальные проблемы и безопасность:
+- Cross-Origin Resource Sharing (CORS)
+- XSS и CSRF
+- Mixed content (http/https)
+- Медленные DNS или серверы
