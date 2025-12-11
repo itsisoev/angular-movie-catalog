@@ -1,0 +1,27 @@
+<div class="movies">
+  @if (error()) {
+    <div class="movies__error">
+      {{ error() }}
+    </div>
+  }
+
+  @if(!isLoading() && !error()) {
+    <div class="movies__movie-grid">
+      @for (movie of movies(); track movie) {
+        <ui-movie-card [movie]="movie" (click)="openModal(movie)"/>
+      }
+    </div>
+  }
+
+  @if (isLoading()) {
+    <ui-loading/>
+  }
+
+  @if (hasMore() && !isLoading()) {
+    <div class="movies__load-more">
+      <button (click)="showMore()">Показать ещё</button>
+    </div>
+  }
+</div>
+
+<features-movie-modal #movieModal/>

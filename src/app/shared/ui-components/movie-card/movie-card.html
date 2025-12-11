@@ -1,0 +1,25 @@
+<div class="movie-card">
+  <div class="movie-card__poster">
+    <img [src]="movie()?.poster" [alt]="movie()?.title"/>
+  </div>
+
+  <div class="movie-card__content">
+    <h3 class="movie-card__title">{{ movie()?.title }}</h3>
+
+    <div class="movie-card__meta">
+      <span class="year">{{ movie()?.year }}</span>
+      <span class="dot"></span>
+      <span class="rating">★ {{ movie()?.rating }}</span>
+    </div>
+
+    <p class="movie-card__description">
+      {{ movie()?.description | slice:0:120 }}...
+    </p>
+
+    <div class="movie-card__genres">
+      @for (g of movie()?.genre; track g) {
+        <span class="genre-chip">{{ g }}</span>
+      }
+    </div>
+  </div>
+</div>

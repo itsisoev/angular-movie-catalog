@@ -1,0 +1,23 @@
+@if(isOpen()) {
+  <div class="modal">
+    <div class="modal__backdrop" (click)="close()"></div>
+
+    <div class="modal__content">
+      <button class="modal__close" (click)="close()">×</button>
+
+      <div class="modal__body">
+        <img class="modal__poster" [src]="movie()?.poster" [alt]="movie()?.title"/>
+        <div class="modal__details">
+          <h2>{{ movie()?.title }} ({{ movie()?.year }})</h2>
+          <p><strong>Рейтинг:</strong> ★ {{ movie()?.rating }}</p>
+          <p><strong>Жанры:</strong> {{ movie()?.genre?.join(', ') || 'Не указано' }}</p>
+          <p><strong>Описание:</strong> {{ movie()?.description }}</p>
+          <p><strong>Режиссер:</strong> {{ movie()?.director }}</p>
+          <p><strong>Актеры:</strong> {{ movie()?.actors?.join(', ') || 'Не указано' }}</p>
+          <p><strong>Страна:</strong> {{ movie()?.country }}</p>
+          <p><strong>Продолжительность:</strong> {{ movie()?.duration }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+}
